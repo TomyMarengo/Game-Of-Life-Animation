@@ -15,13 +15,15 @@ sizez = int(lines[3].split()[1])
 grids = [[[[0 for _ in range(1)] for _ in range(sizey)] for _ in range(sizex)] for _ in range(max_step + 1)]
 
 j = -1
-for i in range(6, len(lines), 2):
+for i in range(6, len(lines)-1, 2):
     j += 1
     for z in range(sizez):
         for y in range(sizey):
             for x in range(sizex):
                 line = lines[i]
                 grids[j][x][y][0] = int(line[x + sizex * y + sizex * sizey * z])
+
+time = lines[-1].split()[1]
 
 ##### Graphics #####
 

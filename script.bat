@@ -10,4 +10,3 @@ python animation2d.py
 python animation3d.py
 
 echo Script completado.
-pause
