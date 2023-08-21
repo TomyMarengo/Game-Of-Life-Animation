@@ -49,7 +49,7 @@ def graphics():
     ani = FuncAnimation(fig, frames=max_step, func=update, interval=100)
     plt.tight_layout()
     ani.save('../gif/animation2d.gif')
-    plt.show()
+    print("Gif creado")
     return ani
 
 graphics()
