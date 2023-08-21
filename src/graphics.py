@@ -1,4 +1,5 @@
-# INPUT = Porcentaje de celdas vivas en el dominio inicial
+# INPUT = Porcentaje de celdas vivas en el dominio inicial 
+# (variables en writeFiles.java: fistAlive = % de celdas vivas;  lowerBound y upperBound = comienzo y fin en % del dominio central)
 # por lo menos 6 valores en el intervalo (0, 100%]
 # Por ejemplo = {100, 85, 70, 55, 40, 25} (Menos no porque usualmente se mueren rapido, ya 25 parece poco)
 
