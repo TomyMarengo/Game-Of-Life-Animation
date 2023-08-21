@@ -49,7 +49,7 @@ def graphics():
     ani = FuncAnimation(fig, frames=max_step, func=update, interval=100)
     plt.tight_layout()
     ani.save('../gif/animation2d-colored.gif')
-    print("Gif creado")
+    print("Gif 2d creado")
     return ani
 
 graphics()
