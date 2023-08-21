@@ -49,7 +49,7 @@ def update(frame):
 
 def graphics_3d():
     global ax3d
-    ani = FuncAnimation(fig, frames=max_step, func=update, interval=100)
+    ani = FuncAnimation(fig, frames=max_step, func=update, interval=150)
     ani.save('../gif/animation3d-colored.gif', writer='imagemagick')
     print("Gif 3d creado")
     return ani

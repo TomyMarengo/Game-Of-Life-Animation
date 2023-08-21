@@ -46,7 +46,7 @@ def graphics():
     ax2d.set_xticks([])
     ax2d.set_yticks([])
     
-    ani = FuncAnimation(fig, frames=max_step, func=update, interval=100)
+    ani = FuncAnimation(fig, frames=max_step, func=update, interval=150)
     plt.tight_layout()
     ani.save('../gif/animation2d-colored.gif')
     print("Gif 2d creado")
