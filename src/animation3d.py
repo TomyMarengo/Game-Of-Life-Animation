@@ -2,31 +2,29 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import ListedColormap
-from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.colors import LinearSegmentedColormap
+
 
 with open('../output.txt', 'r') as file:
     lines = file.readlines()
 
-# Obtener los valores de maxstep, sizex, sizey y sizez
-max_step = int(lines[0].split()[1])
-sizex = int(lines[1].split()[1])
-sizey = int(lines[2].split()[1])
-sizez = int(lines[3].split()[1])
+# Obtener los valores de max_step, time, sizex, sizey y sizez
+max_step = int(lines[-1].split()[1])
+time = int(lines[-2].split()[1])
+sizex = int(lines[0].split()[1])
+sizey = int(lines[1].split()[1])
+sizez = int(lines[2].split()[1])
 
-grids = [[[[0 for _ in range(sizez)] for _ in range(sizey)] for _ in range(sizex)] for _ in range(max_step + 1)]
-
-j = -1
-for i in range(6, len(lines)-1, 2):
-    j += 1
-    for z in range(sizez):
-        for y in range(sizey):
-            for x in range(sizex):
-                line = lines[i]
-                grids[j][x][y][z] = int(line[x + sizex * y + sizex * sizey * z])
-
-time = lines[-1].split()[1]
-
+colored_grids = np.ones((max_step + 1, sizex, sizey, sizez, 3))
 ##### Graphics #####
+fig = plt.figure(figsize=(10, 10))
+fig.canvas.manager.set_window_title('Game of Life 3D')
+ax3d = fig.add_subplot(111, projection='3d')
+ax3d.set_xticks([])
+ax3d.set_yticks([])
+ax3d.set_zticks([])
+ax3d.grid(False)
+
 
 def update(frame):
     global ax3d
@@ -37,31 +35,23 @@ def update(frame):
     ax3d.set_zlabel('Z')
     ax3d.set_xlim(0, sizex)
     ax3d.set_ylim(0, sizey)
-    ax3d.set_zlim(-sizez*1.7, sizez*1.7)
-    ax3d.set_xticks([])
-    ax3d.set_yticks([])
-    ax3d.set_zticks([])
-    ax3d.grid(False)
-    
-    # Plot the 3D grid
+    ax3d.set_zlim(0, sizez)
+
     for z in range(sizez):
         for y in range(sizey):
             for x in range(sizex):
-                if grids[frame][x][y][z] == 1:
-                    ax3d.scatter(x, y, z, c='yellow', marker='s')
+                number = int(lines[5 + frame*2][x + sizex * y + sizex * sizey * z])
+                if number == 1:
+                    distance_to_center = np.sqrt((x - sizex/2)**2 + (y - sizey/2)**2 + (z - sizez/2)**2)
+                    normalized_distance = distance_to_center / max(sizex, sizey, sizez)
+                    color = np.array([1, normalized_distance, max(0, normalized_distance/2)])
+                    ax3d.scatter(x, y, z, c=[color], marker='o')
 
 def graphics_3d():
     global ax3d
-    fig = plt.figure(figsize=(10, 10))
-    fig.canvas.manager.set_window_title('Game of Life 3D')
-    ax3d = fig.add_subplot(111, projection='3d')
-
-    ax3d.xaxis.set_pane_color((0.0, 0.8, 0.8, 0.5))
-    ax3d.yaxis.set_pane_color((0.0, 0.8, 0.8, 0.5))
-    ax3d.zaxis.set_pane_color((0.0, 0.8, 0.8, 0.5))
     ani = FuncAnimation(fig, frames=max_step, func=update, interval=100)
-    ani.save('../gif/animation3d.gif', writer='imagemagick')
-    plt.show()
+    ani.save('../gif/animation3d-colored.gif', writer='imagemagick')
+    print("Gif creado")
     return ani
 
 graphics_3d()
