@@ -9,8 +9,9 @@ with open('../output.txt', 'r') as file:
     lines = file.readlines()
 
 # Obtener los valores de max_step, time, sizex, sizey y sizez
-max_step = int(lines[-1].split()[1])
-time = int(lines[-2].split()[1])
+alive = int(lines[-1].split()[1])
+max_step = int(lines[-2].split()[1])
+time = int(lines[-3].split()[1])
 sizex = int(lines[0].split()[1])
 sizey = int(lines[1].split()[1])
 sizez = int(lines[2].split()[1])
@@ -19,9 +20,15 @@ colored_grids = np.ones((max_step + 1, sizex, sizey, 3))
 ##### Graphics #####
 img_plot = None
 ax2d = None
+max_distances = np.array([])
+alives = np.array([])
 
 def update(frame):
-    global img_plot, ax2d
+    
+    global img_plot, ax2d, max_distances
+    
+    max_distance_to_center = 0
+    alive = 0
     line = lines[5 + frame*2]
     for z in range(sizez):
         for y in range(sizey):
@@ -29,6 +36,9 @@ def update(frame):
                 number = int(line[x + sizex * y + sizex * sizey * z])
                 if number == 1:
                     distance_to_center = np.sqrt((x - sizex/2)**2 + (y - sizey/2)**2)
+                    if distance_to_center > max_distance_to_center:
+                        max_distance_to_center = distance_to_center
+                    alive += 1
                     normalized_distance = distance_to_center / max(sizex, sizey)
                     color = np.array([1, normalized_distance, max(0, normalized_distance/2)])
                     colored_grids[frame][x][y] = color
@@ -37,6 +47,9 @@ def update(frame):
         img_plot = ax2d.imshow(colored_grids[frame], interpolation='nearest')
     img_plot.set_array(colored_grids[frame])
     ax2d.set_title(f'Step {frame}', y=0.97, x=0.97)
+    
+    np.append(max_distances, max_distance_to_center)
+    np.append(alives, alive)
     return img_plot
     
 def graphics():

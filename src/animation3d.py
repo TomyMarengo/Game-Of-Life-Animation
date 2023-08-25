@@ -9,8 +9,9 @@ with open('../output.txt', 'r') as file:
     lines = file.readlines()
 
 # Obtener los valores de max_step, time, sizex, sizey y sizez
-max_step = int(lines[-1].split()[1])
-time = int(lines[-2].split()[1])
+alive = int(lines[-1].split()[1])
+max_step = int(lines[-2].split()[1])
+time = int(lines[-3].split()[1])
 sizex = int(lines[0].split()[1])
 sizey = int(lines[1].split()[1])
 sizez = int(lines[2].split()[1])
