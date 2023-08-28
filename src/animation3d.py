@@ -5,7 +5,8 @@ from matplotlib.colors import ListedColormap
 from matplotlib.colors import LinearSegmentedColormap
 
 #inputs = [1.0, 0.85, 0.70]
-inputs = [0.55, 0.40, 0.25]
+#inputs = [0.55, 0.40, 0.25]
+inputs = [0.55]
 
 max_distances_mat = []
 alives_mat = []
@@ -51,7 +52,6 @@ def update(frame):
 
     max_distances = np.append(max_distances, max_distance_to_center)
     alives = np.append(alives, alive)
-    print(alives)
 
 def graphics_3d(input):
     global ax3d
@@ -84,9 +84,9 @@ for elem in inputs:
 
     max_distances_mat.append(max_distances)
     alives_mat.append(alives)
-    print(alives)
 
-
+plt.plot([1,2,3])
+plt.show()
 
 for i in range(len(alives_mat)):
     timeSteps = np.linspace(0, len(alives_mat[i]) - 2, len(alives_mat[i]) - 1)
