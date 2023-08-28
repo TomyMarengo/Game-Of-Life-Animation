@@ -1,12 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation
+from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.colors import ListedColormap
 from matplotlib.colors import LinearSegmentedColormap
 
 #inputs = [1.0, 0.85, 0.70]
-#inputs = [0.55, 0.40, 0.25]
-inputs = [0.55]
+inputs = [0.55, 0.40, 0.25]
+#inputs = [0.55]
 
 max_distances_mat = []
 alives_mat = []
@@ -85,8 +86,11 @@ for elem in inputs:
     max_distances_mat.append(max_distances)
     alives_mat.append(alives)
 
-plt.plot([1,2,3])
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(1, 1, 1)
 plt.show()
+
 
 for i in range(len(alives_mat)):
     timeSteps = np.linspace(0, len(alives_mat[i]) - 2, len(alives_mat[i]) - 1)
