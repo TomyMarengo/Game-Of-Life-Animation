@@ -5,10 +5,10 @@ from matplotlib.colors import ListedColormap
 from matplotlib.colors import LinearSegmentedColormap
 
 
-#inputs = [1.0, 0.85, 0.70]
+inputs = [1.0, 0.85, 0.7, 0.55, 0.40, 0.25]
 #inputs = [0.55, 0.40, 0.25]
-inputs = [0.50, 0.50]
-files = ['CONWAY', 'VONNEUMANN']
+#inputs = [0.50, 0.50]
+#files = ['CONWAY', 'VONNEUMANN']
 
 ##### Graphics #####
 img_plot = None
@@ -62,11 +62,11 @@ def graphics(input):
 
 
 
-for elem in files:
-    #elem = round(elem*100)
-    #with open('../output_' + str(elem) +'.txt', 'r') as file:
+for elem in inputs:
+    elem = round(elem*100)
+    with open('../output_' + str(elem) +'.txt', 'r') as file:
     #with open('../outputs/2Doutput_' + str(elem) + '.txt', 'r') as file:
-    with open('../outputs/2D' + elem + 'output_50.txt', 'r') as file:
+    #with open('../outputs/2D' + elem + 'output_50.txt', 'r') as file:
         lines = file.readlines()
 
     # Obtener los valores de max_step, time, sizex, sizey y sizez
@@ -92,13 +92,13 @@ plt.show()
 
 for i in range(len(alives_mat)):
     timeSteps = np.linspace(0, len(alives_mat[i]) - 2, len(alives_mat[i]) - 1)
-    #plt.plot(timeSteps, alives_mat[i][1:], label=(str(round(inputs[i] * 100)) + '%'))
-    plt.plot(timeSteps, alives_mat[i][1:], label=(files[i] + '%'))
+    plt.plot(timeSteps, alives_mat[i][1:], label=(str(round(inputs[i] * 100)) + '%'))
+    #plt.plot(timeSteps, alives_mat[i][1:], label=(files[i] + '%'))
     #plt.plot(timeSteps, alives_mat[i][1:]/(alives_mat[i][0]/inputs[i]), label = (str(round(inputs[i]*100)) + '%'))
 
 
 
-plt.title('Celdas vivas en 2D')
+#plt.title('Celdas vivas en 2D')
 plt.grid()
 plt.xlabel('Pasos de tiempo')
 plt.ylabel('Celdas vivas')
@@ -108,11 +108,11 @@ plt.show()
 
 for i in range(len(max_distances_mat)):
     timeSteps = np.linspace(0, len(max_distances_mat[i]) - 2, len(max_distances_mat[i]) - 1)
-    #plt.plot(timeSteps, max_distances_mat[i][1:], label=(str(round(inputs[i] * 100)) + '%'))
-    plt.plot(timeSteps, max_distances_mat[i][1:], label=(files[i] + '%'))
+    plt.plot(timeSteps, max_distances_mat[i][1:], label=(str(round(inputs[i] * 100)) + '%'))
+    #plt.plot(timeSteps, max_distances_mat[i][1:], label=(files[i] + '%'))
 
 
-plt.title('El "radio" del patró 2D')
+#plt.title('El "radio" del patró 2D')
 plt.grid()
 plt.xlabel('Pasos de tiempo')
 plt.ylabel('"Radio" [-]')

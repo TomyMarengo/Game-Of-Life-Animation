@@ -97,7 +97,7 @@ for i in range(len(alives_mat)):
     plt.plot(timeSteps, alives_mat[i][1:], label=(str(round(inputs[i] * 100)) + '%'))
     # plt.plot(timeSteps, alives_mat[i][1:]/(alives_mat[i][0]/inputs[i]), label = (str(round(inputs[i]*100)) + '%'))
 
-plt.title('Celdas vivas en 3D')
+#plt.title('Celdas vivas en 3D')
 plt.grid()
 plt.xlabel('Pasos de tiempo')
 plt.ylabel('Celdas vivas')
@@ -112,7 +112,7 @@ for i in range(len(max_distances_mat)):
     plt.plot(timeSteps, max_distances_mat[i][1:], label=(str(round(inputs[i] * 100)) + '%'))
 
 
-plt.title('El "radio" del patró 3D')
+#plt.title('El "radio" del patró 3D')
 plt.grid()
 plt.xlabel('Pasos de tiempo')
 plt.ylabel('"Radio" [-]')
