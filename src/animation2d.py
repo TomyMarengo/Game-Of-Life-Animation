@@ -5,27 +5,19 @@ from matplotlib.colors import ListedColormap
 from matplotlib.colors import LinearSegmentedColormap
 
 
-with open('../output.txt', 'r') as file:
-    lines = file.readlines()
+#inputs = [1.0, 0.85, 0.70]
+inputs = [0.55, 0.40, 0.25]
 
-# Obtener los valores de max_step, time, sizex, sizey y sizez
-alive = int(lines[-1].split()[1])
-max_step = int(lines[-2].split()[1])
-time = int(lines[-3].split()[1])
-sizex = int(lines[0].split()[1])
-sizey = int(lines[1].split()[1])
-sizez = int(lines[2].split()[1])
-
-colored_grids = np.ones((max_step + 1, sizex, sizey, 3))
 ##### Graphics #####
 img_plot = None
 ax2d = None
-max_distances = np.array([])
-alives = np.array([])
+max_distances_mat = []
+alives_mat = []
+
 
 def update(frame):
     
-    global img_plot, ax2d, max_distances
+    global img_plot, ax2d, max_distances, alives
     
     max_distance_to_center = 0
     alive = 0
@@ -34,7 +26,7 @@ def update(frame):
         for y in range(sizey):
             for x in range(sizex):
                 number = int(line[x + sizex * y + sizex * sizey * z])
-                if number == 1:
+                if number == 1 and z == 15:             #Depends on the size of the grid
                     distance_to_center = np.sqrt((x - sizex/2)**2 + (y - sizey/2)**2)
                     if distance_to_center > max_distance_to_center:
                         max_distance_to_center = distance_to_center
@@ -47,12 +39,13 @@ def update(frame):
         img_plot = ax2d.imshow(colored_grids[frame], interpolation='nearest')
     img_plot.set_array(colored_grids[frame])
     ax2d.set_title(f'Step {frame}', y=0.97, x=0.97)
-    
-    np.append(max_distances, max_distance_to_center)
-    np.append(alives, alive)
+
+    max_distances = np.append(max_distances, max_distance_to_center)
+    alives = np.append(alives, alive)
+
     return img_plot
     
-def graphics():
+def graphics(input):
     global img_plot, ax2d
     fig, ax2d = plt.subplots(figsize=(10, 10))
     fig.canvas.manager.set_window_title('Game of Life')
@@ -61,8 +54,61 @@ def graphics():
     
     ani = FuncAnimation(fig, frames=max_step, func=update, interval=150)
     plt.tight_layout()
-    ani.save('../gif/animation2d-colored.gif')
+    ani.save('../gif/animation2d-colored_' + str(input) + '.gif')
     print("Gif 2d creado")
     return ani
 
-graphics()
+
+
+for elem in inputs:
+    elem = round(elem*100)
+    with open('../output_' + str(elem) +'.txt', 'r') as file:
+        lines = file.readlines()
+
+    # Obtener los valores de max_step, time, sizex, sizey y sizez
+    alive = int(lines[-1].split()[1])
+    max_step = int(lines[-2].split()[1])
+    time = int(lines[-3].split()[1])
+    sizex = int(lines[0].split()[1])
+    sizey = int(lines[1].split()[1])
+    sizez = int(lines[2].split()[1])
+
+    colored_grids = np.ones((max_step + 1, sizex, sizey, 3))
+
+    max_distances = np.array([])
+    alives = np.array([])
+    
+    graphics(elem)
+
+    max_distances_mat.append(max_distances)
+    alives_mat.append(alives)
+
+plt.plot([1,2])
+plt.show()
+
+for i in range(len(alives_mat)):
+    timeSteps = np.linspace(0, len(alives_mat[i]) - 2, len(alives_mat[i]) - 1)
+    plt.plot(timeSteps, alives_mat[i][1:], label=(str(round(inputs[i] * 100)) + '%'))
+    #plt.plot(timeSteps, alives_mat[i][1:]/(alives_mat[i][0]/inputs[i]), label = (str(round(inputs[i]*100)) + '%'))
+
+
+
+plt.title('Celdas vivas en 2D')
+plt.grid()
+plt.xlabel('Pasos de tiempo')
+plt.ylabel('Celdas vivas')
+plt.legend()
+plt.show()
+
+
+for i in range(len(max_distances_mat)):
+    timeSteps = np.linspace(0, len(max_distances_mat[i]) - 2, len(max_distances_mat[i]) - 1)
+    plt.plot(timeSteps, max_distances_mat[i][1:], label=(str(round(inputs[i] * 100)) + '%'))
+
+
+plt.title('El "radio" del patró 2D')
+plt.grid()
+plt.xlabel('Pasos de tiempo')
+plt.ylabel('"Radio" [-]')
+plt.legend()
+plt.show()
