@@ -1,8 +1,2 @@
-gif/2d/*.gif
-gif/3d/*.gif
-
-images/2d/*.png
-images/3d/*.png
-
-outputs/2d/*.txt
-outputs/3d/*.txt
+.vscode
+.idea
