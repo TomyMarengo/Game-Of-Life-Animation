@@ -70,7 +70,7 @@ for system in range(systems):
                 alive_cells_list[system][my_input][rep][step] = alive_cells
         
             max_distances_scalars[system][my_input][rep] = np.max(max_distances_list[system][my_input][rep])
-            alive_cells_scalars[system][my_input][rep] = np.max(alive_cells_list[system][my_input][rep])
+            alive_cells_scalars[system][my_input][rep] = alive_cells_list[system][my_input][rep][-1]
         
         avg_max_distances_scalars[system][my_input] = np.mean(max_distances_scalars[system][my_input])
         std_max_distances_scalars[system][my_input] = np.std(max_distances_scalars[system][my_input])
@@ -82,13 +82,12 @@ for system in range(systems):
     
     # OUTPUT MAX DISTANCIA VS TIEMPO
     plt.figure(figsize=(10, 6))
-    plt.title('Maximum distance as a function of time')
     for i, curve_values in enumerate(max_distances_list[system]):
         time = np.arange(1, len(curve_values[0]) + 1)
         plt.plot(time, curve_values[0], label=f'{percentages[i]} %')
 
-    plt.xlabel('Time')
-    plt.ylabel('Maximum Euclidean distance to the center (Cells)')
+    plt.xlabel('Tiempo')
+    plt.ylabel('Maxima distancia Euclídea al centro (Celdas)')
     plt.grid()
     plt.legend(loc='upper right')
 
@@ -97,13 +96,12 @@ for system in range(systems):
     
     # OUTPUT CANTIDAD DE CELDAS VIVAS VS TIEMPO
     plt.figure(figsize=(10, 6))
-    plt.title('Cantidad de celdas vivas en funcion del tiempo')
     for i, curve_values in enumerate(alive_cells_list[system]):
         time = np.arange(1, len(curve_values[0]) + 1)
         plt.plot(time, curve_values[0], label=f'{percentages[i]} %')
 
-    plt.xlabel('Time')
-    plt.ylabel('Number of living cells')
+    plt.xlabel('Tiempo')
+    plt.ylabel('Numero de celdas vivas')
     plt.grid()
     plt.legend(loc='upper right')
 
@@ -112,10 +110,9 @@ for system in range(systems):
     
     # OBSERVABLE MAX DISTANCIA VS INPUT
     plt.figure(figsize=(10, 6))
-    plt.title('Maximum distance per input')
     plt.errorbar(x_values, avg_max_distances_scalars[system], yerr=std_max_distances_scalars[system], fmt='o')
     plt.xlabel('Input (%)')
-    plt.ylabel('Maximum Euclidean distance to the center (Cells)')
+    plt.ylabel('Maxima distancia Euclídea al centro (Celdas)')
     plt.xticks(x_values, percentages)
     plt.grid()
     
@@ -124,12 +121,11 @@ for system in range(systems):
     
     # OBSERVABLE MAX CANTIDAD CELDAS VIVAS VS INPUT
     plt.figure(figsize=(10, 6))
-    plt.title('Maximum number of live cells per Input')
     plt.errorbar(x_values, avg_alive_cells_scalars[system], yerr=std_alive_cells_scalars[system], fmt='o')
     plt.xlabel('Input (%)')
-    plt.ylabel('Maximum number of living cells')
+    plt.ylabel('Último número de celdas vivas')
     plt.xticks(x_values, percentages)
     plt.grid()
     
-    plt.savefig('../images/' + dimension + '/obs_max_alive_cells_' +  dimension + '_' + graph_suffix + '.png') 
-    print('obs_max_alive_cells_' + dimension + '_' + graph_suffix + ' creado')
+    plt.savefig('../images/' + dimension + '/obs_last_alive_cells_' +  dimension + '_' + graph_suffix + '.png') 
+    print('obs_last_alive_cells_' + dimension + '_' + graph_suffix + ' creado')
