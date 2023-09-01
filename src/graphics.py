@@ -82,13 +82,13 @@ for system in range(systems):
     
     # OUTPUT MAX DISTANCIA VS TIEMPO
     plt.figure(figsize=(10, 6))
-    plt.title('Maxima distancia en funcion del tiempo')
+    plt.title('Maximum distance as a function of time')
     for i, curve_values in enumerate(max_distances_list[system]):
         time = np.arange(1, len(curve_values[0]) + 1)
         plt.plot(time, curve_values[0], label=f'{percentages[i]} %')
 
-    plt.xlabel('Tiempo')
-    plt.ylabel('Maxima distancia euclidiana al centro (Celdas)')
+    plt.xlabel('Time')
+    plt.ylabel('Maximum Euclidean distance to the center (Cells)')
     plt.grid()
     plt.legend(loc='upper right')
 
@@ -102,8 +102,8 @@ for system in range(systems):
         time = np.arange(1, len(curve_values[0]) + 1)
         plt.plot(time, curve_values[0], label=f'{percentages[i]} %')
 
-    plt.xlabel('Tiempo')
-    plt.ylabel('Cantidad de celdas vivas')
+    plt.xlabel('Time')
+    plt.ylabel('Number of living cells')
     plt.grid()
     plt.legend(loc='upper right')
 
@@ -112,10 +112,10 @@ for system in range(systems):
     
     # OBSERVABLE MAX DISTANCIA VS INPUT
     plt.figure(figsize=(10, 6))
-    plt.title('Maxima distancia por Input')
+    plt.title('Maximum distance per input')
     plt.errorbar(x_values, avg_max_distances_scalars[system], yerr=std_max_distances_scalars[system], fmt='o')
     plt.xlabel('Input (%)')
-    plt.ylabel('Maxima distancia euclidiana al centro (Celdas)')
+    plt.ylabel('Maximum Euclidean distance to the center (Cells)')
     plt.xticks(x_values, percentages)
     plt.grid()
     
@@ -124,10 +124,10 @@ for system in range(systems):
     
     # OBSERVABLE MAX CANTIDAD CELDAS VIVAS VS INPUT
     plt.figure(figsize=(10, 6))
-    plt.title('Maxima cantidad de celdas vivas por Input')
+    plt.title('Maximum number of live cells per Input')
     plt.errorbar(x_values, avg_alive_cells_scalars[system], yerr=std_alive_cells_scalars[system], fmt='o')
     plt.xlabel('Input (%)')
-    plt.ylabel('Maxima cantidad de celdas vivas')
+    plt.ylabel('Maximum number of living cells')
     plt.xticks(x_values, percentages)
     plt.grid()
     
